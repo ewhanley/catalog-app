@@ -30,10 +30,15 @@ def showMainPage():
     return render_template('index.html')
 
 
+@app.route('/cars/<string:category>/')
+def readCategory(category):
+    return render_template('category.html')
+
+
 @app.route('/cars/<string:category>/<int:car_id>')
 def readCar(category, car_id):
     car = session.query(Car).filter_by(category=category, id=car_id).one()
-    return 'You can read information about a car here!'
+    return render_template('car.html')
 
 
 @app.route('/cars/create/', methods=['GET', 'POST'])
