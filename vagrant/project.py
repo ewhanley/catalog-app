@@ -32,7 +32,8 @@ def showMainPage():
 
 @app.route('/cars/<string:category>/')
 def readCategory(category):
-    return render_template('category.html')
+    cars = session.query(Car).filter_by(category=category).all()
+    return render_template('category.html', category=category, cars=cars)
 
 
 @app.route('/cars/<string:category>/<int:car_id>')
