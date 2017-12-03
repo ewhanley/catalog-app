@@ -12,6 +12,13 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+def format_currency(value):
+    return "${:,.2f}".format(value)
+
+
+app.jinja_env.globals.update(format_currency=format_currency)
+
+
 @app.route('/cars/<string:category>/JSON')
 def categoryJSON(category):
     cars = session.query(Car).filter_by(category=category).all()
@@ -39,7 +46,7 @@ def readCategory(category):
 @app.route('/cars/<string:category>/<int:car_id>')
 def readCar(category, car_id):
     car = session.query(Car).filter_by(category=category, id=car_id).one()
-    return render_template('car.html')
+    return render_template('car.html', car=car)
 
 
 @app.route('/cars/create/', methods=['GET', 'POST'])
