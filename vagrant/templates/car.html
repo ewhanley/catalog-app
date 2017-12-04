@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+    <title>Category <- replace this</title>
+    <link rel='stylesheet' href="{{ url_for('static', filename='styles.css') }}"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  </head>
+  <body>
+    <div class='page'>
+      <div class='section menu'>
+        <div class='title'>
+          <h1>Car Catalog App</h1>
+        </div>
+        <div class='login-button-container'>
+            <button class="login-button">Login</button>
+        </div>
+      </div>
+      <div class='section breadcrumb-banner'>
+        <span><a class='breadcrumb-link' href="{{ url_for('showMainPage') }}">Home</a> > 
+          <a class='breadcrumb-link' href="{{ url_for('readCategory',category=car.category) }}">{{ car.category }}</a> > 
+          {{ car.year }} {{ car.make }} {{ car.model }}</span>
+      </div>
+      <div class='section section-title'>
+        <h3>{{ car.year }} {{ car.make }} {{ car.model }}</h3>
+      </div>
+      <div class='section car-container'>
+        <div class='ad-img-container'>
+            <img src="{{ url_for('static', filename='dummy.jpg') }}">
+        </div>
+        <div class='car-details'>
+          <h4>Price: {{ format_currency(car.price) }}</h4>
+          <h4>Year: {{ car.year }}</h4>
+          <h4>Make: {{ car.make }}</h4>
+          <h4>Model: {{ car.model }}</h4>
+          <h4>Mileage: {{ car.model }}</h4>
+        </div>
+        <div class='car-description'>
+          <p>{{ car.description }}</p>
+        </div>
+      </div>
+      <div class='section footer'>
+        <p>This is the footer</p>
+      </div>
+    </div>
+
+  </body>
+</html>

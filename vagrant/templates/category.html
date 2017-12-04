@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+    <title>{{ category }}</title>
+    <link rel='stylesheet' href="{{ url_for('static', filename='styles.css') }}"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  </head>
+  <body>
+    <div class='page'>
+      <div class='section menu'>
+        <div class='title'>
+          <h1>Car Catalog App</h1>
+        </div>
+        <div class='login-button-container'>
+            <button class="login-button">Login</button>
+        </div>
+      </div>
+      <div class='section breadcrumb-banner'>
+        <span><a class='breadcrumb-link' href="{{ url_for('showMainPage') }}">Home</a> > Category</span>
+      </div>
+      <div class='section section-title'>
+        <h3>{{ category }}</h3>
+      </div>
+      <div class='section card-container'>
+        {% for car in cars %}
+        <div class='section car-card'>
+          <span>{{ car.year }} {{ car.make }} {{car.model }}</span>
+          <span>{{ format_currency(car.price) }}</span>
+          <a class='car-card-link' href="{{ url_for('readCar', category=car.category, car_id=car.id) }}"></a>
+        </div>
+        {% endfor %}
+      </div>
+      <div class='section footer'>
+        <p>This is the footer</p>
+      </div>
+    </div>
+
+  </body>
+</html>
