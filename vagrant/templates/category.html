@@ -26,9 +26,8 @@
       <div class='section card-container'>
         {% for car in cars %}
         <div class='section car-card'>
-          <span>{{ car.year }} {{ car.make }} {{car.model }}</span>
+          <a href="{{ url_for('readCar', category=car.category, car_id=car.id) }}"><span>{{ car.year }} {{ car.make }} {{car.model }}</span></a>
           <span>{{ format_currency(car.price) }}</span>
-          <a class='car-card-link' href="{{ url_for('readCar', category=car.category, car_id=car.id) }}"></a>
         </div>
         {% endfor %}
       </div>

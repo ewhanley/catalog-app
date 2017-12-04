@@ -16,7 +16,12 @@ def format_currency(value):
     return "${:,.2f}".format(value)
 
 
+def format_number(value):
+    return "{:,}".format(value)
+
+
 app.jinja_env.globals.update(format_currency=format_currency)
+app.jinja_env.globals.update(format_number=format_number)
 
 
 @app.route('/cars/<string:category>/JSON')
