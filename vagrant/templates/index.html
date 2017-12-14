@@ -47,15 +47,12 @@
         </div>
       </div>
       <div class='section card-container'>
-        <div class='section car-card'>
-          <p>This is feature 1</p>
-        </div>
-        <div class='section car-card'>
-          <p>This is feature 2</p>
-        </div>
-        <div class='section car-card'>
-          <p>This is feature 3</p>
-        </div>
+          {% for car in newest %}
+          <div class='section car-card'>
+            <a href="{{ url_for('readCar', category=car.category, car_id=car.id) }}"><span>{{ car.year }} {{ car.make }} {{car.model }}</span></a>
+            <span>{{ format_currency(car.price) }}</span>
+          </div>
+          {% endfor %}
       </div>
       <div class='section footer'>
         <p>This is the footer</p>

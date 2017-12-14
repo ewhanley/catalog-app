@@ -13,7 +13,7 @@ session = DBSession()
 
 
 def format_currency(value):
-    return "${:,.2f}".format(value)
+    return "${:}".format(value)
 
 
 def format_number(value):
@@ -39,7 +39,8 @@ def carJSON(category, car_id):
 @app.route('/')
 @app.route('/cars/')
 def showMainPage():
-    return render_template('index.html')
+    newest = session.query(Car).order_by(Car.id.desc()).limit(3).all()
+    return render_template('index.html', newest=newest)
 
 
 @app.route('/cars/<string:category>/')
@@ -56,7 +57,20 @@ def readCar(category, car_id):
 
 @app.route('/cars/create/', methods=['GET', 'POST'])
 def createCar():
-    return 'You can create a new car here!'
+    if request.method == 'POST':
+        newCar = Car(
+            category=request.form['category'],
+            year=request.form['year'],
+            make=request.form['make'],
+            model=request.form['model'],
+            mileage=request.form['mileage'],
+            price=request.form['price'],
+            description=request.form['description'])
+        session.add(newCar)
+        session.commit()
+        return redirect(url_for('showMainPage'))
+    else:
+        return render_template('create.html')
 
 
 @app.route('/cars/<string:category>/<int:car_id>/update/', methods=['GET', 'POST'])
