@@ -13,7 +13,7 @@ session = DBSession()
 
 
 def format_currency(value):
-    return "${:}".format(value)
+    return "${:,}".format(value)
 
 
 def format_number(value):
@@ -75,7 +75,21 @@ def createCar():
 
 @app.route('/cars/<string:category>/<int:car_id>/update/', methods=['GET', 'POST'])
 def updateCar(category, car_id):
-    return 'You can edit a car here!'
+    if request.method == 'POST':
+        editCar = session.query(Car).filter_by(id=car_id).one()
+        editCar.category = request.form['category']
+        editCar.year = request.form['year']
+        editCar.make = request.form['make']
+        editCar.model = request.form['model']
+        editCar.mileage = request.form['mileage']
+        editCar.price = request.form['price']
+        description = request.form['description']
+        session.add(editCar)
+        session.commit()
+        return redirect(url_for('readCar', category=editCar.category, car_id=editCar.id))
+    else:
+        editCar = session.query(Car).filter_by(id=car_id).one()
+        return render_template('update.html', category=category, car_id=car_id, editCar=editCar)
 
 
 @app.route('/cars/<string:category>/<int:car_id>/delete/', methods=['GET', 'POST'])

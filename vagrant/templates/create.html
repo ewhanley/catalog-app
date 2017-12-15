@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+    <title>{{ category }}</title>
+    <link rel='stylesheet' href="{{ url_for('static', filename='styles.css') }}"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  </head>
+  <body>
+    <div class='page'>
+      <div class='section menu'>
+        <div class='title'>
+          <h1>Car Catalog App</h1>
+        </div>
+        <div class='login-button-container'>
+            <button class="login-button">Login</button>
+        </div>
+      </div>
+      <div class='section breadcrumb-banner'>
+        <span><a class='breadcrumb-link' href="{{ url_for('showMainPage') }}">Home</a> > Create</span>
+      </div>
+      <div class='section section-title'>
+        <h3>Create New Post</h3>
+      </div>
+      <div class='car-form'>
+        <form action="{{ url_for('createCar') }}" method='post'>
+          Category:</br>
+          <select name="category">
+              <option value="Coupe">Coupe</option>
+              <option value="Hatchback">Hatchback</option>
+              <option value="Pickup">Pickup</option>
+              <option value="Sedan">Sedan</option>
+              <option value="SUV">SUV</option>
+              <option value="Van">Van</option>
+              <option value="Wagon">Wagon</option>
+          </select></br></br>
+          Year: <input type='integer' size='10' name='year'>
+          Make: <input type='text' size='30' name='make'>
+          Model: <input type='text' size='30' name='model'></br></br>
+          Mileage: <input type='integer' size='20' name='mileage'>
+          Price:  <input type='integer' size='20' name='price'></br></br>
+          Description:</br>
+          <textarea name='description' rows='10' cols='100'></textarea></br></br>
+          <div>
+            <input type='submit' value='Create'>
+            <a class='cancel-link' href="{{ url_for('showMainPage') }}">Cancel</a>
+          </div>
+        </form>
+      </div>
+
+      <div class='section footer'>
+        <p>This is the footer</p>
+      </div>
+    </div>
+
+  </body>
+</html>
