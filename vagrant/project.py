@@ -94,7 +94,16 @@ def updateCar(category, car_id):
 
 @app.route('/cars/<string:category>/<int:car_id>/delete/', methods=['GET', 'POST'])
 def deleteCar(category, car_id):
-    return 'You can delete a car here!'
+    if request.method == 'POST':
+        deleteCar = session.query(Car).filter_by(
+            category=category, id=car_id).one()
+        session.delete(deleteCar)
+        session.commit()
+        return redirect(url_for('showMainPage'))
+    else:
+        deleteCar = session.query(Car).filter_by(
+            category=category, id=car_id).one()
+        return render_template('delete.html', category=deleteCar.category, car_id=deleteCar.id, deleteCar=deleteCar)
 
 
 if __name__ == '__main__':

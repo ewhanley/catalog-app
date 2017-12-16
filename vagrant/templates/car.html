@@ -39,6 +39,9 @@
         <div class='car-description'>
           <p>{{ car.description }}</p>
         </div>
+        <div class='update-delete-links'>
+          <span><a href="{{ url_for('updateCar', category=car.category, car_id=car.id) }}">Update Post</a> | <a href="{{ url_for('deleteCar', category=car.category, car_id=car.id) }}">Delete Post</a></span>
+        </div>
       </div>
       <div class='section footer'>
         <p>This is the footer</p>
