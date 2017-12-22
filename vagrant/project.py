@@ -8,6 +8,7 @@ from database_setup import Base, Car, User
 
 app = Flask(__name__)
 
+
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 

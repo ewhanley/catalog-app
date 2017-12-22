@@ -138,7 +138,7 @@ body {
 
 .car-card-img-holder {
     width: 90%;
-    max-height: 200px;
+    height: 170px;
     justify-content: center;
     overflow: hidden;
     margin-top: 15px;
@@ -195,16 +195,14 @@ body {
 }
 
 .ad-img-container {
-    background-color: #ffffff;
-    border: black solid 1px;
-    width: 100%;
-    height: auto;
-    padding: 0px 20px 0px 20px;
+    width: 90%;
+    max-height: 350px;
+    overflow: hidden;
 }
 
 .ad-img-container img {
-    max-width: 100%;
-    max-height: 360px;
+    width: 100%;
+    height: auto;
 }
 
 .car-details {
@@ -227,6 +225,35 @@ body {
     padding-bottom: 10px;
 }
 
+input[type=text],
+input[type=number],
+textarea,
+fieldset {
+    /* required to properly style form elements on WebKit based browsers */
+    -webkit-appearance: none;
+
+    border:1px solid #333;
+    margin: 0;
+
+    font-family: inherit;
+    font-size: 90%;
+
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+textarea {
+    width: 100%;
+}
+
+input:invalid {
+    box-shadow: 0 0 5px 1px red;
+}
+
+input:focus:invalid {
+    outline: none;
+}
+
 /* Mobile Styles */
 @media only screen and (max-width: 400px) {
     body {
@@ -241,6 +268,12 @@ body {
     }
     .car-card {
         width: 45%;
+    }
+    .ad-img-container {
+        width: 55%;
+    }
+    .car-details {
+        width: 35%;
     }
 }
 
@@ -257,9 +290,9 @@ body {
         width: 30%;
     }
     .ad-img-container {
-        width: 60%;
+        width: 55%;
     }
     .car-details {
-        width: 40%;
+        width: 35%;
     }
 }
