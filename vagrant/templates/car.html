@@ -4,7 +4,7 @@
     <meta charset='UTF-8'/>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
     <title>Category <- replace this</title>
-    <link rel='stylesheet' href="{{ url_for('static', filename='styles.css') }}"/>
+    <link rel='stylesheet' href="{{ url_for('static', filename='css/styles.css') }}"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   </head>
   <body>
@@ -27,7 +27,11 @@
       </div>
       <div class='section car-container'>
         <div class='ad-img-container'>
-            <img src="{{ url_for('static', filename='dummy.jpg') }}">
+          {% if car.image is none %}
+            <img src="{{ url_for('static', filename='uploads/placeholder.png') }}">
+          {% else %}
+            <img src="{{ url_for('static', filename='uploads/' + car.image) }}">
+          {% endif %}
         </div>
         <div class='car-details'>
           <h4>Price: {{ format_currency(car.price) }}</h4>

@@ -66,8 +66,14 @@ body {
 
 .banner {
     width: 100%;
-    display: block;
+    height: auto;
 }
+
+.banner img {
+    width: 100%;
+    height: auto;
+}
+
 
 .category-container {
     justify-content: space-evenly;
@@ -124,10 +130,24 @@ body {
 .car-card {
     flex-direction: column;
     width: 100%;
-    height: 300px;
+    height: 250px;
     background-color: #f3de8a;
     border-radius: 5px;
     margin-top: 10px;
+}
+
+.car-card-img-holder {
+    width: 90%;
+    max-height: 200px;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.car-card-img-holder img {
+    width: 100%;
+    height: auto;
 }
 
 .car-card-link {
@@ -175,6 +195,8 @@ body {
 }
 
 .ad-img-container {
+    background-color: #ffffff;
+    border: black solid 1px;
     width: 100%;
     height: auto;
     padding: 0px 20px 0px 20px;

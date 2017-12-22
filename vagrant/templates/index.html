@@ -4,7 +4,7 @@
     <meta charset='UTF-8'/>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
     <title>Cars For Sale</title>
-    <link rel='stylesheet' href="{{ url_for('static', filename='styles.css') }}"/>
+    <link rel='stylesheet' href="{{ url_for('static', filename='css/styles.css') }}"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   </head>
   <body>
@@ -49,6 +49,9 @@
       <div class='section card-container'>
           {% for car in newest %}
           <div class='section car-card'>
+            <div class='car-card-img-holder'>
+              <img src="{{ url_for('static', filename='uploads/' + car.image) }}">
+            </div>
             <a href="{{ url_for('readCar', category=car.category, car_id=car.id) }}"><span>{{ car.year }} {{ car.make }} {{car.model }}</span></a>
             <span>{{ format_currency(car.price) }}</span>
           </div>

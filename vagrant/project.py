@@ -1,9 +1,15 @@
 from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
-app = Flask(__name__)
-
+import os
+import hashlib
+import uuid
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Car, User
+
+app = Flask(__name__)
+
+UPLOAD_FOLDER = os.path.join('static', 'uploads')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 engine = create_engine('sqlite:///usedcars.db')
 Base.metadata.bind = engine
@@ -39,7 +45,7 @@ def carJSON(category, car_id):
 @app.route('/')
 @app.route('/cars/')
 def showMainPage():
-    newest = session.query(Car).order_by(Car.id.desc()).limit(3).all()
+    newest = session.query(Car).order_by(Car.id.desc()).limit(6).all()
     return render_template('index.html', newest=newest)
 
 
@@ -58,6 +64,14 @@ def readCar(category, car_id):
 @app.route('/cars/create/', methods=['GET', 'POST'])
 def createCar():
     if request.method == 'POST':
+        file = request.files['image']
+        if len(file.filename) > 0:
+            hashedFilename = hashlib.md5(
+                str(uuid.uuid4()) + file.filename).hexdigest()
+            f = os.path.join(app.config['UPLOAD_FOLDER'], hashedFilename)
+            file.save(f)
+        else:
+            hashedFilename = 'placeholder.png'
         newCar = Car(
             category=request.form['category'],
             year=request.form['year'],
@@ -65,7 +79,8 @@ def createCar():
             model=request.form['model'],
             mileage=request.form['mileage'],
             price=request.form['price'],
-            description=request.form['description'])
+            description=request.form['description'],
+            image=hashedFilename)
         session.add(newCar)
         session.commit()
         return redirect(url_for('showMainPage'))

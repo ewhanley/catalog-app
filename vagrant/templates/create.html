@@ -4,7 +4,7 @@
     <meta charset='UTF-8'/>
     <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
     <title>{{ category }}</title>
-    <link rel='stylesheet' href="{{ url_for('static', filename='styles.css') }}"/>
+    <link rel='stylesheet' href="{{ url_for('static', filename='css/styles.css') }}"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   </head>
   <body>
@@ -24,7 +24,7 @@
         <h3>Create New Post</h3>
       </div>
       <div class='car-form'>
-        <form action="{{ url_for('createCar') }}" method='post'>
+        <form action="{{ url_for('createCar') }}" method='post' enctype='multipart/form-data'>
           Category:</br>
           <select name="category">
               <option value="Coupe">Coupe</option>
@@ -42,6 +42,8 @@
           Price:  <input type='integer' size='20' name='price'></br></br>
           Description:</br>
           <textarea name='description' rows='10' cols='100'></textarea></br></br>
+          <span class='login-button'>Browse <input type='file' name='image'>
+          </span>
           <div>
             <input type='submit' value='Create'>
             <a class='cancel-link' href="{{ url_for('showMainPage') }}">Cancel</a>

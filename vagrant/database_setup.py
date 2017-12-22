@@ -25,6 +25,7 @@ class Car(Base):
     price = Column(Integer, nullable=False)
     id = Column(Integer, primary_key=True)
     description = Column(String(250))
+    image = Column(String(32))
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
@@ -40,7 +41,8 @@ class Car(Base):
             'price': self.price,
             'description': self.description,
             'id': self.id,
-            'user_id': self.user_id
+            'user_id': self.user_id,
+            'image': self.image
         }
 
 
