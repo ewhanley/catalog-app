@@ -93,13 +93,22 @@ def createCar():
 def updateCar(category, car_id):
     if request.method == 'POST':
         editCar = session.query(Car).filter_by(id=car_id).one()
+        if request.files['image'].filename != '' > 0:
+            file = request.files['image']
+            hashedFilename = hashlib.md5(
+                str(uuid.uuid4()) + file.filename).hexdigest()
+            f = os.path.join(app.config['UPLOAD_FOLDER'], hashedFilename)
+            file.save(f)
+        else:
+            hashedFilename = editCar.image
         editCar.category = request.form['category']
         editCar.year = request.form['year']
         editCar.make = request.form['make']
         editCar.model = request.form['model']
         editCar.mileage = request.form['mileage']
         editCar.price = request.form['price']
-        description = request.form['description']
+        editCar.description = request.form['description']
+        editCar.image = hashedFilename
         session.add(editCar)
         session.commit()
         return redirect(url_for('readCar', category=editCar.category, car_id=editCar.id))

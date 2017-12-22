@@ -24,24 +24,34 @@
         <h3>Edit {{ editCar.year }} {{ editCar.make }} {{ editCar.model }}</h3>
       </div>
       <div class='car-form'>
-        <form action="{{ url_for('updateCar', category=editCar.category, car_id=editCar.id) }}" method='post'>
-          Category:</br>
-          <select name="category">
-              <option value="Coupe">Coupe</option>
-              <option value="Hatchback">Hatchback</option>
-              <option value="Pickup">Pickup</option>
-              <option value="Sedan">Sedan</option>
-              <option value="SUV">SUV</option>
-              <option value="Van">Van</option>
-              <option value="Wagon">Wagon</option>
-          </select></br></br>
-          Year: <input type='integer' size='10' name='year' value="{{ editCar.year }}">
-          Make: <input type='text' size='30' name='make' value="{{ editCar.make }}">
-          Model: <input type='text' size='30' name='model' value="{{ editCar.model }}"></br></br>
-          Mileage: <input type='integer' size='20' name='mileage' value="{{ editCar.mileage }}">
-          Price:  <input type='integer' size='20' name='price' value="{{ editCar.price }}"></br></br>
-          Description:</br>
-          <textarea name='description' rows='10' cols='100'>{{ editCar.description }}</textarea></br></br>
+        <form action="{{ url_for('updateCar', category=editCar.category, car_id=editCar.id) }}" method='post' enctype='multipart/form-data'>
+            <label for='category'>Please select a category:</label>
+            <input type='text' id='category' name='category' list='l1' required
+              pattern='Coupe|Hatchback|Pickup|Sedan|SUV|Van|Wagon' value="{{ editCar.category }}">
+            <datalist id='l1'>
+                <option>Coupe</option>
+                <option>Hatchback</option>
+                <option>Pickup</option>
+                <option>Sedan</option>
+                <option>SUV</option>
+                <option>Van</option>
+                <option>Wagon</option>
+            </datalist>
+            </br></br>
+            <label for='year'>Year:</label>
+            <input type='number' min='1900' max='2050' id='year' name='year' required pattern='[0-9]{4}' value="{{ editCar.year }}">
+            <label for='make'>Make:</label>
+            <input type='text' maxLength='20' name='make' required value="{{ editCar.make }}">
+            <label for='model'>Model:</label>
+            <input type='text' maxLength='30' name='model' required value="{{ editCar.model }}"></br></br>
+            <label for='mileage'>Mileage:</label>
+            <input type='number' min='0' max='1000000' id='mileage' name='mileage' value="{{ editCar.mileage }}">
+            <label for='price'>Price:</label>
+            <input type='number' min='0' max='1000000000' id='price' name='price' placeholder='USD' value="{{ editCar.price }}"></br></br>
+            <label for='description'>Description:</label></br>
+            <textarea id='description' name='description' maxlength='1000' columns='300' rows='10'>{{ editCar.description }}</textarea></br></br>
+            <span class='button'>Upload Image: <input type='file' name='image' accept='image/*'>
+            </span>
           <div>
             <input type='submit' value='Update'>
             <a class='cancel-link' href="{{ url_for('readCar', category=editCar.category, car_id=editCar.id) }}">Cancel</a>

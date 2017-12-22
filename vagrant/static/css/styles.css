@@ -225,6 +225,13 @@ body {
     padding-bottom: 10px;
 }
 
+.car-form {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #f9f8f8;
+}
+
 input[type=text],
 input[type=number],
 textarea,
@@ -259,6 +266,13 @@ input:focus:invalid {
     body {
         background-color: #F09A9D;
     }
+
+    input[type=text],
+    input[type=number],
+    textarea,
+    fieldset {
+        width: 100%;
+    }
 }
 
 /* Tablet Styles */
@@ -274,6 +288,12 @@ input:focus:invalid {
     }
     .car-details {
         width: 35%;
+    }
+    input[type=text],
+    input[type=number],
+    textarea,
+    fieldset {
+        width: 100%;
     }
 }
 
