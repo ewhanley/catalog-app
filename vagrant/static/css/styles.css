@@ -4,9 +4,11 @@
     box-sizing: border-box;
 }
 
-body {
+body, h1, p, .btn {
     font-family: 'Roboto', Verdana, Geneva, Tahoma, sans-serif;
+    color: #272838;
 }
+
 
 .page {
     display: flex;
@@ -36,25 +38,10 @@ body {
     height: 80px;
 }
 
-.login-button-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 33%;
-    align-items: flex-end;
-    margin-right: 20px;
-    height: 80px;
-}
 
-.login-button {
-    background-color: #eb9486;
+.btn {
+    background-color: #f3de8a;
     border: none;
-    color: #272838;
-    text-align: center;
-    font-size: 16px;
-    border-radius: 8px;
-    width: 120px;
-    height: 40px;
 }
 
 .login-button:active {
@@ -103,6 +90,11 @@ body {
     height: 40px;
     line-height: 40px;
     color: #272838;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.category-link:hover {
     text-decoration: none;
 }
 
@@ -182,7 +174,7 @@ body {
     flex-wrap: wrap;
     height: auto;
     background-color: #7e7f9a;
-    padding-bottom: 15px;
+    padding-bottom: 0px;
 }
 
 .car-container {
@@ -232,6 +224,13 @@ body {
     background-color: #f9f8f8;
 }
 
+.alert {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+
+
 input[type=text],
 input[type=number],
 textarea,
@@ -260,6 +259,8 @@ input:invalid {
 input:focus:invalid {
     outline: none;
 }
+
+
 
 /* Mobile Styles */
 @media only screen and (max-width: 400px) {

@@ -104,7 +104,6 @@ def gconnect():
         return response
 
     stored_access_token = login_session.get('access_token')
-    print stored_access_token
     stored_gplus_id = login_session.get('gplus_id')
     if stored_access_token is not None and gplus_id == stored_gplus_id:
         response = make_response(
@@ -120,7 +119,6 @@ def gconnect():
     userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo"
     params = {'access_token': credentials.access_token, 'alt': 'json'}
     answer = requests.get(userinfo_url, params=params)
-    print answer.json()
 
     data = answer.json()
 
@@ -131,8 +129,7 @@ def gconnect():
     output += '<h1>Welcome, '
     output += login_session['username']
     output += '!</h1>'
-    flash("You are now logged in as %s" % login_session['username'])
-    print "done!"
+    flash("You are now logged in as %s" % login_session['username'], 'success')
     return output
 
 
@@ -161,7 +158,8 @@ def gdisconnect():
         del login_session['email']
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
-        return response
+        flash("You have successfully logged out!", 'success')
+        return redirect(url_for('showMainPage'))
     else:
         response = make_response(json.dumps(
             'Failed to revoke token for given user.'), 400)
@@ -185,19 +183,29 @@ def carJSON(category, car_id):
 @app.route('/cars/')
 def showMainPage():
     newest = session.query(Car).order_by(Car.id.desc()).limit(6).all()
-    return render_template('index.html', newest=newest)
+    if 'username' not in login_session:
+        return render_template('index.html', newest=newest)
+    else:
+        return render_template('index_loggedin.html', newest=newest)
 
 
 @app.route('/cars/<string:category>/')
 def readCategory(category):
+    print request.referrer
     cars = session.query(Car).filter_by(category=category).all()
-    return render_template('category.html', category=category, cars=cars)
+    if 'username' not in login_session:
+        return render_template('category.html', category=category, cars=cars)
+    else:
+        return render_template('category_loggedin.html', category=category, cars=cars)
 
 
 @app.route('/cars/<string:category>/<int:car_id>')
 def readCar(category, car_id):
     car = session.query(Car).filter_by(category=category, id=car_id).one()
-    return render_template('car.html', car=car)
+    if 'username' not in login_session:
+        return render_template('car.html', car=car)
+    else:
+        return render_template('car_loggedin.html', car=car)
 
 
 @app.route('/cars/create/', methods=['GET', 'POST'])

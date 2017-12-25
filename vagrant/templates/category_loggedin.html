@@ -10,9 +10,6 @@
     crossorigin="anonymous">
   <link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Roboto">
   <link rel='stylesheet' href="{{ url_for('static', filename='css/styles.css') }}">
-
-
-
 </head>
 
 <body>
@@ -22,39 +19,28 @@
         <h1>Car Catalog App</h1>
       </div>
       <div class='login-button-container'>
-        <a href="{{ url_for('showLogin') }}" class="btn btn-primary btn-lg" role="button">Login</a>
+        <a href="{{ url_for('gdisconnect') }}" class="btn btn-primary btn-lg" role="button">Logout</a>
       </div>
     </div>
     <div class='section breadcrumb-banner'>
       <span>
-        <a class='breadcrumb-link' href="{{ url_for('showMainPage') }}">Home</a> >
-        <a class='breadcrumb-link' href="{{ url_for('readCategory',category=car.category) }}">{{ car.category }}</a> > {{ car.year }} {{ car.make }} {{ car.model }}</span>
+        <a class='breadcrumb-link' href="{{ url_for('showMainPage') }}">Home</a> > {{ category }}</span>
     </div>
     <div class='section section-title'>
-      <h3>{{ car.year }} {{ car.make }} {{ car.model }}</h3>
+      <h3>{{ category }}</h3>
     </div>
-    <div class='section car-container'>
-      <div class='ad-img-container'>
-        {% if car.image is none %}
-        <img src="{{ url_for('static', filename='uploads/placeholder.png') }}"> {% else %}
-        <img src="{{ url_for('static', filename='uploads/' + car.image) }}"> {% endif %}
+    <div class='section card-container'>
+      {% for car in cars %}
+      <div class='section car-card'>
+        <div class='car-card-img-holder'>
+          <img src="{{ url_for('static', filename='uploads/' + car.image) }}">
+        </div>
+        <a href="{{ url_for('readCar', category=car.category, car_id=car.id) }}">
+          <span>{{ car.year }} {{ car.make }} {{car.model }}</span>
+        </a>
+        <span>{{ format_currency(car.price) }}</span>
       </div>
-      <div class='car-details'>
-        <h4>Price: {{ format_currency(car.price) }}</h4>
-        <h4>Year: {{ car.year }}</h4>
-        <h4>Make: {{ car.make }}</h4>
-        <h4>Model: {{ car.model }}</h4>
-        <h4>Mileage: {{ format_number(car.mileage) }}</h4>
-      </div>
-      <div class='car-description'>
-        <p>{{ car.description }}</p>
-      </div>
-      <div class='update-delete-links'>
-        <span>
-          <a href="{{ url_for('updateCar', category=car.category, car_id=car.id) }}">Update Post</a> |
-          <a href="{{ url_for('deleteCar', category=car.category, car_id=car.id) }}">Delete Post</a>
-        </span>
-      </div>
+      {% endfor %}
     </div>
     <div class='section footer'>
       <p>This is the footer</p>
@@ -66,7 +52,6 @@
     crossorigin="anonymous "></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js " integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ "
     crossorigin="anonymous "></script>
-
 </body>
 
 </html>
