@@ -49,12 +49,14 @@
       <div class='car-description'>
         <p>{{ car.description }}</p>
       </div>
+      {% if user_id == car.user_id %}
       <div class='update-delete-links'>
         <span>
           <a href="{{ url_for('updateCar', category=car.category, car_id=car.id) }}">Update Post</a> |
           <a href="{{ url_for('deleteCar', category=car.category, car_id=car.id) }}">Delete Post</a>
         </span>
       </div>
+      {% endif %}
     </div>
     <div class='section footer'>
       <p>This is the footer</p>

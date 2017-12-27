@@ -233,7 +233,8 @@ def readCar(category, car_id):
     if 'username' not in login_session:
         return render_template('car.html', car=car)
     else:
-        return render_template('car_loggedin.html', car=car)
+        user_id = getUserID(login_session['email'])
+        return render_template('car_loggedin.html', car=car, user_id=user_id)
 
 
 @app.route('/cars/create/', methods=['GET', 'POST'])
@@ -314,6 +315,9 @@ def deleteCar(category, car_id):
                 category=category, id=car_id).one()
             session.delete(deleteCar)
             session.commit()
+            flash_message = "You successfully deleted your %s %s %s post." % (
+                deleteCar.year, deleteCar.make, deleteCar.model)
+            flash(flash_message, 'success')
             return redirect(url_for('showMainPage'))
         else:
             deleteCar = session.query(Car).filter_by(
