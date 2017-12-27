@@ -14,6 +14,8 @@ import httplib2
 import json
 from flask import make_response
 import requests
+import calendar
+import time
 
 app = Flask(__name__)
 
@@ -125,10 +127,14 @@ def gconnect():
     login_session['username'] = data['name']
     login_session['email'] = data['email']
 
-    output = ''
-    output += '<h1>Welcome, '
-    output += login_session['username']
-    output += '!</h1>'
+    if getUserID(login_session['email']) is None:
+        login_session['user_id'] = createUser(login_session)
+    else:
+        login_session['user_id'] = getUserID(login_session['email'])
+
+    print login_session['user_id']
+
+    output = '<h1>Welcome, ' + login_session['username'] + '!</h1>'
     flash("You are now logged in as %s" % login_session['username'], 'success')
     return output
 
@@ -165,6 +171,28 @@ def gdisconnect():
             'Failed to revoke token for given user.'), 400)
         response.headers['Content-Type'] = 'application/json'
         return response
+
+
+def createUser(login_session):
+    newUser = User(name=login_session['username'],
+                   email=login_session['email'])
+    session.add(newUser)
+    session.commit()
+    user = session.query(User).filter_by(email=login_session['email']).one()
+    return user.id
+
+
+def getUserInfo(user_id):
+    user = session.query(User).filter_by(id=user.id).one()
+    return user
+
+
+def getUserID(email):
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user.id
+    except:
+        return None
 
 
 @app.route('/cars/<string:category>/JSON')
@@ -210,71 +238,87 @@ def readCar(category, car_id):
 
 @app.route('/cars/create/', methods=['GET', 'POST'])
 def createCar():
-    if request.method == 'POST':
-        file = request.files['image']
-        if len(file.filename) > 0:
-            hashedFilename = hashlib.md5(
-                str(uuid.uuid4()) + file.filename).hexdigest()
-            f = os.path.join(app.config['UPLOAD_FOLDER'], hashedFilename)
-            file.save(f)
-        else:
-            hashedFilename = 'placeholder.png'
-        newCar = Car(
-            category=request.form['category'],
-            year=request.form['year'],
-            make=request.form['make'],
-            model=request.form['model'],
-            mileage=request.form['mileage'],
-            price=request.form['price'],
-            description=request.form['description'],
-            image=hashedFilename)
-        session.add(newCar)
-        session.commit()
-        return redirect(url_for('showMainPage'))
+    if 'username' not in login_session:
+        return redirect(url_for('showLogin'))
     else:
-        return render_template('create.html')
+        if request.method == 'POST':
+            file = request.files['image']
+            if len(file.filename) > 0:
+                hashedFilename = hashlib.md5(
+                    str(uuid.uuid4()) + file.filename).hexdigest()
+                f = os.path.join(app.config['UPLOAD_FOLDER'], hashedFilename)
+                file.save(f)
+            else:
+                hashedFilename = 'placeholder.png'
+            newCar = Car(
+                category=request.form['category'],
+                year=request.form['year'],
+                make=request.form['make'],
+                model=request.form['model'],
+                mileage=request.form['mileage'],
+                price=request.form['price'],
+                description=request.form['description'],
+                image=hashedFilename,
+                user_id=login_session['user_id'],
+                dt_created=calendar.timegm(time.gmtime()))
+            session.add(newCar)
+            session.commit()
+
+            car = session.query(Car).filter_by(
+                user_id=login_session['user_id']).order_by(Car.dt_created.desc()).first()
+
+            return redirect(url_for('readCar', category=car.category, car_id=car.id))
+        else:
+            return render_template('create.html')
 
 
 @app.route('/cars/<string:category>/<int:car_id>/update/', methods=['GET', 'POST'])
 def updateCar(category, car_id):
-    if request.method == 'POST':
-        editCar = session.query(Car).filter_by(id=car_id).one()
-        if request.files['image'].filename != '' > 0:
-            file = request.files['image']
-            hashedFilename = hashlib.md5(
-                str(uuid.uuid4()) + file.filename).hexdigest()
-            f = os.path.join(app.config['UPLOAD_FOLDER'], hashedFilename)
-            file.save(f)
-        else:
-            hashedFilename = editCar.image
-        editCar.category = request.form['category']
-        editCar.year = request.form['year']
-        editCar.make = request.form['make']
-        editCar.model = request.form['model']
-        editCar.mileage = request.form['mileage']
-        editCar.price = request.form['price']
-        editCar.description = request.form['description']
-        editCar.image = hashedFilename
-        session.add(editCar)
-        session.commit()
-        return redirect(url_for('readCar', category=editCar.category, car_id=editCar.id))
+    if 'username' not in login_session:
+        return redirect(url_for('showLogin'))
     else:
-        editCar = session.query(Car).filter_by(id=car_id).one()
-        return render_template('update.html', category=category, car_id=car_id, editCar=editCar)
+        if request.method == 'POST':
+            editCar = session.query(Car).filter_by(id=car_id).one()
+            if request.files['image'].filename != '' > 0:
+                file = request.files['image']
+                hashedFilename = hashlib.md5(
+                    str(uuid.uuid4()) + file.filename).hexdigest()
+                f = os.path.join(app.config['UPLOAD_FOLDER'], hashedFilename)
+                file.save(f)
+            else:
+                hashedFilename = editCar.image
+            editCar.category = request.form['category']
+            editCar.year = request.form['year']
+            editCar.make = request.form['make']
+            editCar.model = request.form['model']
+            editCar.mileage = request.form['mileage']
+            editCar.price = request.form['price']
+            editCar.description = request.form['description']
+            editCar.image = hashedFilename
+            editCar.dt_modified = calendar.timegm(time.gmtime())
+            session.add(editCar)
+            session.commit()
+            return redirect(url_for('readCar', category=editCar.category, car_id=editCar.id))
+        else:
+            editCar = session.query(Car).filter_by(id=car_id).one()
+            return render_template('update.html', category=category, car_id=car_id, editCar=editCar)
 
 
 @app.route('/cars/<string:category>/<int:car_id>/delete/', methods=['GET', 'POST'])
 def deleteCar(category, car_id):
-    if request.method == 'POST':
-        deleteCar = session.query(Car).filter_by(
-            category=category, id=car_id).one()
-        session.delete(deleteCar)
-        session.commit()
-        return redirect(url_for('showMainPage'))
+    if 'username' not in login_session:
+        return redirect(url_for('showLogin'))
     else:
-        deleteCar = session.query(Car).filter_by(
-            category=category, id=car_id).one()
-        return render_template('delete.html', category=deleteCar.category, car_id=deleteCar.id, deleteCar=deleteCar)
+        if request.method == 'POST':
+            deleteCar = session.query(Car).filter_by(
+                category=category, id=car_id).one()
+            session.delete(deleteCar)
+            session.commit()
+            return redirect(url_for('showMainPage'))
+        else:
+            deleteCar = session.query(Car).filter_by(
+                category=category, id=car_id).one()
+            return render_template('delete.html', category=deleteCar.category, car_id=deleteCar.id, deleteCar=deleteCar)
 
 
 if __name__ == '__main__':

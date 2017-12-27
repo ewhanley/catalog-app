@@ -27,6 +27,8 @@ class Car(Base):
     description = Column(String(250))
     image = Column(String(32))
     user_id = Column(Integer, ForeignKey('user.id'))
+    dt_created = Column(Integer, nullable=False)
+    dt_modified = Column(Integer)
     user = relationship(User)
 
     @property
@@ -42,7 +44,9 @@ class Car(Base):
             'description': self.description,
             'id': self.id,
             'user_id': self.user_id,
-            'image': self.image
+            'image': self.image,
+            'date_created': self.dt_created,
+            'date_modified': self.dt_modified
         }
 
 
