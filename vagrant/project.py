@@ -148,15 +148,10 @@ def gdisconnect():
             'Current user not connected.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    print 'In gdisconnect access token is %s', access_token
-    print 'User name is: '
-    print login_session['username']
+
     url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % access_token
-    print url
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
-    print 'result is '
-    print result
     if result['status'] == '200':
         del login_session['access_token']
         del login_session['gplus_id']
@@ -237,6 +232,16 @@ def readCar(category, car_id):
         return render_template('car_loggedin.html', car=car, user_id=user_id)
 
 
+@app.route('/my posts/')
+@app.route('/cars/my posts/')
+def myPosts():
+    cars = session.query(Car).filter_by(user_id=login_session['user_id']).all()
+    if 'username' not in login_session:
+        return redirect(url_for('showLogin'))
+    else:
+        return render_template('my_posts.html', cars=cars)
+
+
 @app.route('/cars/create/', methods=['GET', 'POST'])
 def createCar():
     if 'username' not in login_session:
@@ -267,7 +272,7 @@ def createCar():
 
             car = session.query(Car).filter_by(
                 user_id=login_session['user_id']).order_by(Car.dt_created.desc()).first()
-            flash_message = "You successfully a post for a %s %s %s!" % (
+            flash_message = "You successfully created a post for a %s %s %s!" % (
                 car.year, car.make, car.model)
             flash(flash_message, 'success')
 

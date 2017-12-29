@@ -1,68 +1,98 @@
 <!DOCTYPE html>
 <html lang='en'>
-  <head>
-    <meta charset='UTF-8'/>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
-    <title>{{ category }}</title>
-    <link rel='stylesheet' href="{{ url_for('static', filename='css/styles.css') }}"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-  </head>
-  <body>
-    <div class='page'>
-      <div class='section menu'>
-        <div class='title'>
-          <h1>Car Catalog App</h1>
-        </div>
-        <div class='login-button-container'>
-            <button class="login-button">Login</button>
-        </div>
-      </div>
-      <div class='section breadcrumb-banner'>
-        <span><a class='breadcrumb-link' href="{{ url_for('showMainPage') }}">Home</a> > Create</span>
-      </div>
-      <div class='section section-title'>
-        <h3>Edit {{ editCar.year }} {{ editCar.make }} {{ editCar.model }}</h3>
-      </div>
-      <div class='car-form'>
-        <form action="{{ url_for('updateCar', category=editCar.category, car_id=editCar.id) }}" method='post' enctype='multipart/form-data'>
-            <label for='category'>Please select a category:</label>
-            <input type='text' id='category' name='category' list='l1' required
-              pattern='Coupe|Hatchback|Pickup|Sedan|SUV|Van|Wagon' value="{{ editCar.category }}">
-            <datalist id='l1'>
-                <option>Coupe</option>
-                <option>Hatchback</option>
-                <option>Pickup</option>
-                <option>Sedan</option>
-                <option>SUV</option>
-                <option>Van</option>
-                <option>Wagon</option>
-            </datalist>
-            </br></br>
-            <label for='year'>Year:</label>
-            <input type='number' min='1900' max='2050' id='year' name='year' required pattern='[0-9]{4}' value="{{ editCar.year }}">
-            <label for='make'>Make:</label>
-            <input type='text' maxLength='20' name='make' required value="{{ editCar.make }}">
-            <label for='model'>Model:</label>
-            <input type='text' maxLength='30' name='model' required value="{{ editCar.model }}"></br></br>
-            <label for='mileage'>Mileage:</label>
-            <input type='number' min='0' max='1000000' id='mileage' name='mileage' value="{{ editCar.mileage }}">
-            <label for='price'>Price:</label>
-            <input type='number' min='0' max='1000000000' id='price' name='price' placeholder='USD' value="{{ editCar.price }}"></br></br>
-            <label for='description'>Description:</label></br>
-            <textarea id='description' name='description' maxlength='1000' columns='300' rows='10'>{{ editCar.description }}</textarea></br></br>
-            <span class='button'>Upload Image: <input type='file' name='image' accept='image/*'>
-            </span>
-          <div>
-            <input type='submit' value='Update'>
-            <a class='cancel-link' href="{{ url_for('readCar', category=editCar.category, car_id=editCar.id) }}">Cancel</a>
-          </div>
-        </form>
-      </div>
 
-      <div class='section footer'>
-        <p>This is the footer</p>
+<head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+  <title>Cars For Sale</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+  <link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel='stylesheet' href="{{ url_for('static', filename='css/styles.css') }}">
+
+
+
+</head>
+
+<body>
+  <div class='page'>
+    <div class='section menu'>
+      <div class='title'>
+        <h1>Car Catalog App</h1>
+      </div>
+      <div class='login-button-container'>
+        <a href="{{ url_for('gdisconnect') }}" class="btn btn-primary btn-sm" role="button">Logout</a>
+        <a href="{{ url_for('myPosts') }}">My Posts</a>
       </div>
     </div>
+    <div class='section breadcrumb-banner'>
+      <span>
+        <a class='breadcrumb-link' href="{{ url_for('showMainPage') }}">Home</a> >
+        <a class='breadcrumb-link' href="{{ url_for('readCategory',category=editCar.category) }}">{{ editCar.category }}</a> >
+        <a class='breadcrumb-link' href="{{ url_for('readCar', category=editCar.category, car_id=editCar.id) }}">{{ editCar.year }} {{ editCar.make }} {{ editCar.model }}</a> > Update</span>
+    </div>
+    <div class='section section-title'>
+      <h3>Edit {{ editCar.year }} {{ editCar.make }} {{ editCar.model }}</h3>
+    </div>
+    <div class='car-form'>
+      <form action="{{ url_for('updateCar', category=editCar.category, car_id=editCar.id) }}" method='post' enctype='multipart/form-data'>
+        <label for='category'>Please select a category:</label>
+        <input type='text' id='category' name='category' list='l1' required pattern='Coupe|Hatchback|Pickup|Sedan|SUV|Van|Wagon'
+          value="{{ editCar.category }}">
+        <datalist id='l1'>
+          <option>Coupe</option>
+          <option>Hatchback</option>
+          <option>Pickup</option>
+          <option>Sedan</option>
+          <option>SUV</option>
+          <option>Van</option>
+          <option>Wagon</option>
+        </datalist>
+        </br>
+        </br>
+        <label for='year'>Year:</label>
+        <input type='number' min='1900' max='2050' id='year' name='year' required pattern='[0-9]{4}' value="{{ editCar.year }}">
+        <label for='make'>Make:</label>
+        <input type='text' maxLength='20' name='make' required value="{{ editCar.make }}">
+        <label for='model'>Model:</label>
+        <input type='text' maxLength='30' name='model' required value="{{ editCar.model }}">
+        </br>
+        </br>
+        <label for='mileage'>Mileage:</label>
+        <input type='number' min='0' max='1000000' id='mileage' name='mileage' value="{{ editCar.mileage }}">
+        <label for='price'>Price:</label>
+        <input type='number' min='0' max='1000000000' id='price' name='price' placeholder='USD' value="{{ editCar.price }}">
+        </br>
+        </br>
+        <label for='description'>Description:</label>
+        </br>
+        <textarea id='description' name='description' maxlength='1000' columns='300' rows='10'>{{ editCar.description }}</textarea>
+        </br>
+        </br>
+        <span class='button'>Upload Image:
+          <input type='file' name='image' accept='image/*'>
+        </span>
+        <div class='btn-toolbar'>
+          <input type='submit' class='btn btn-success btn-lg' value='Update'>
+          <a class='btn btn-default btn-lg' href="{{ url_for('readCar', category=editCar.category, car_id=editCar.id) }}" role='button'>Cancel</a>
+        </div class='btn-toolbar'>
+      </form>
+    </div>
 
-  </body>
+    <div class='section footer'>
+      <p>This page was created by Eric Hanley as part of the Udacity Full Stack Nanodegree program.</p>
+      <div class="social-media-links">
+        <a class="social-media-link" href="https://github.com/ewhanley">
+          <img src="{{ url_for('static', filename='GitHub-Mark-32px.png') }}" alt="GitHub profile" width="21" height="21" />
+        </a>
+        <a class="social-media-link" href="https://www.linkedin.com/in/ericwhanley/">
+          <img src="{{ url_for('static', filename='In-Black-21px-TM.png') }}" alt="Linkedin profile" width="32" height="21" />
+        </a>
+      </div>
+    </div>
+  </div>
+
+</body>
+
 </html>

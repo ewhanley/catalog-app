@@ -22,7 +22,8 @@
         <h1>Car Catalog App</h1>
       </div>
       <div class='login-button-container'>
-        <a href="{{ url_for('gdisconnect') }}" class="btn btn-primary btn-lg" role="button">Logout</a>
+        <a href="{{ url_for('gdisconnect') }}" class="btn btn-primary btn-sm" role="button">Logout</a>
+        <a href="{{ url_for('myPosts') }}">My Posts</a>
       </div>
     </div>
     <div class='section breadcrumb-banner'>
@@ -70,17 +71,25 @@
           <input type='file' name='image' accept='image/*'>
         </span>
         </br>
-        </br>
-        <div>
-          <input type='submit' value='Create'>
-          <a class='cancel-link' href="{{ url_for('showMainPage') }}">Cancel</a>
-        </div>
-      </form>
+        <div class='btn-toolbar'>
+          <input type='submit' class='btn btn-success btn-lg' value='Create'>
+          <a class='btn btn-warning btn-lg' href="{{ url_for('showMainPage') }}" role='button'>Cancel</a>
+        </div class='btn-toolbar'>
     </div>
+    </form>
+  </div>
 
-    <div class='section footer'>
-      <p>This is the footer</p>
+  <div class='section footer'>
+    <p>This page was created by Eric Hanley as part of the Udacity Full Stack Nanodegree program.</p>
+    <div class="social-media-links">
+      <a class="social-media-link" href="https://github.com/ewhanley">
+        <img src="{{ url_for('static', filename='GitHub-Mark-32px.png') }}" alt="GitHub profile" width="21" height="21" />
+      </a>
+      <a class="social-media-link" href="https://www.linkedin.com/in/ericwhanley/">
+        <img src="{{ url_for('static', filename='In-Black-21px-TM.png') }}" alt="Linkedin profile" width="32" height="21" />
+      </a>
     </div>
+  </div>
   </div>
 
 </body>

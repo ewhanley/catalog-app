@@ -1,8 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
 
 <head>
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+  <title>Cars For Sale</title>
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+  <link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel='stylesheet' href="{{ url_for('static', filename='css/styles.css') }}">
   <!-- LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
   </script>
@@ -11,42 +18,68 @@
 </head>
 
 <body>
-  <!-- GOOGLE PLUS SIGN IN BUTTON -->
-  <div id="signinButton">
-    <span class="g-signin" data-scope="openid email" data-clientid="your-google-api-id-here.apps.googleusercontent.com" data-redirecturi="postmessage"
-      data-accesstype="offline" data-cookiepolicy="single_host_origin" data-callback="signInCallback" data-approvalprompt="force">
-    </span>
-  </div>
+  <div class='page'>
+    <div class='section menu'>
+      <div class='title-login'>
+        <h1>Car Catalog App</h1>
+      </div>
+    </div>
+    <div class='section breadcrumb-banner'>
+      <span>
+        <a class='breadcrumb-link' href="{{ url_for('showMainPage') }}">Home</a> > Login</span>
+    </div>
+    <div class='section section-title'>
+      <h3>Login</h3>
+    </div>
+    <div class='login-expl'>After logging in you will be able to create and manage posts. Please log in with one of the following services:</div>
+    <!-- GOOGLE PLUS SIGN IN BUTTON -->
+    <div class="signinButtons">
+      <div>
+        <span class="g-signin" data-scope="openid email" data-clientid="your-google-app-client-id.apps.googleusercontent.com" data-redirecturi="postmessage"
+          data-accesstype="offline" data-cookiepolicy="single_host_origin" data-callback="signInCallback" data-approvalprompt="force">
+        </span>
+      </div>
+    </div>
 
-  <div id="result"></div>
-
-  <script>
-    function signInCallback(authResult) {
-      if (authResult['code']) {
-        // Hide the sign-in button now that the user is authorized
-        $('#signinButton').attr('style', 'display: none');
-        // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
-        $.ajax({
-          type: 'POST',
-          url: '/gconnect?state={{STATE}}',
-          processData: false,
-          data: authResult['code'],
-          contentType: 'application/octet-stream; charset=utf-8',
-          success: function (result) {
-            // Handle or verify the server response if necessary.
-            if (result) {
-              window.location.href = "/cars";
-            } else if (authResult['error']) {
-              console.log('There was an error: ' + authResult['error']);
-            } else {
-              $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+    <script>
+      function signInCallback(authResult) {
+        if (authResult['code']) {
+          // Hide the sign-in button now that the user is authorized
+          $('#signinButton').attr('style', 'display: none');
+          // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
+          $.ajax({
+            type: 'POST',
+            url: '/gconnect?state={{STATE}}',
+            processData: false,
+            data: authResult['code'],
+            contentType: 'application/octet-stream; charset=utf-8',
+            success: function (result) {
+              // Handle or verify the server response if necessary.
+              if (result) {
+                window.location.href = "/cars";
+              } else if (authResult['error']) {
+                console.log('There was an error: ' + authResult['error']);
+              } else {
+                $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+              }
             }
-          }
-        });
+          });
+        }
       }
-    }
-  </script>
-  <!-- END GOOGLE PLUS SIGN IN BUTTON -->
+    </script>
+    <!-- END GOOGLE PLUS SIGN IN BUTTON -->
+    <div class='section footer'>
+      <p>This page was created by Eric Hanley as part of the Udacity Full Stack Nanodegree program.</p>
+      <div class="social-media-links">
+        <a class="social-media-link" href="https://github.com/ewhanley">
+          <img src="{{ url_for('static', filename='GitHub-Mark-32px.png') }}" alt="GitHub profile" width="21" height="21" />
+        </a>
+        <a class="social-media-link" href="https://www.linkedin.com/in/ericwhanley/">
+          <img src="{{ url_for('static', filename='In-Black-21px-TM.png') }}" alt="Linkedin profile" width="32" height="21" />
+        </a>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
