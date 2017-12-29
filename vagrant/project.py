@@ -323,9 +323,14 @@ def deleteCar(category, car_id):
     if 'username' not in login_session:
         return redirect(url_for('showLogin'))
     else:
+        deleteCar = session.query(Car).filter_by(
+            category=category, id=car_id).one()
+        if login_session['user_id'] != deleteCar.user_id:
+            flash("You don't have authorization to delete this post.", 'warning')
+            return redirect(url_for('readCar', category=deleteCar.category,
+                                    car_id=deleteCar.id))
         if request.method == 'POST':
-            deleteCar = session.query(Car).filter_by(
-                category=category, id=car_id).one()
+
             session.delete(deleteCar)
             session.commit()
             flash_message = "You successfully deleted your %s %s %s post." % (
