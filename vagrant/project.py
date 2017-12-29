@@ -267,6 +267,9 @@ def createCar():
 
             car = session.query(Car).filter_by(
                 user_id=login_session['user_id']).order_by(Car.dt_created.desc()).first()
+            flash_message = "You successfully a post for a %s %s %s!" % (
+                car.year, car.make, car.model)
+            flash(flash_message, 'success')
 
             return redirect(url_for('readCar', category=car.category, car_id=car.id))
         else:
@@ -278,8 +281,14 @@ def updateCar(category, car_id):
     if 'username' not in login_session:
         return redirect(url_for('showLogin'))
     else:
+
+        editCar = session.query(Car).filter_by(id=car_id).one()
+        if login_session['user_id'] != editCar.user_id:
+            flash("You don't have authorization to update this post.", 'warning')
+            return redirect(url_for('readCar', category=editCar.category,
+                                    car_id=editCar.id))
         if request.method == 'POST':
-            editCar = session.query(Car).filter_by(id=car_id).one()
+
             if request.files['image'].filename != '' > 0:
                 file = request.files['image']
                 hashedFilename = hashlib.md5(
@@ -299,6 +308,10 @@ def updateCar(category, car_id):
             editCar.dt_modified = calendar.timegm(time.gmtime())
             session.add(editCar)
             session.commit()
+            flash_message = "You successfully updated your %s %s %s post." % (
+                editCar.year, editCar.make, editCar.model)
+            flash(flash_message, 'success')
+
             return redirect(url_for('readCar', category=editCar.category, car_id=editCar.id))
         else:
             editCar = session.query(Car).filter_by(id=car_id).one()
