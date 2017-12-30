@@ -5,14 +5,10 @@
   <meta charset='UTF-8' />
   <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
   <title>Cars For Sale</title>
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
   <link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Roboto">
   <link rel='stylesheet' href="{{ url_for('static', filename='css/styles.css') }}">
-
-
-
 </head>
 
 <body>
@@ -23,18 +19,21 @@
       </div>
       <div class='login-button-container'>
         <a href="{{ url_for('disconnect') }}" class="btn btn-primary btn-sm" role="button">Logout</a>
-        <a href="{{ url_for('myPosts') }}">My Posts</a>
+        <a href="{{ url_for('my_posts') }}">My Posts</a>
       </div>
     </div>
+
     <div class='section breadcrumb-banner'>
       <span>
-        <a class='breadcrumb-link' href="{{ url_for('showMainPage') }}">Home</a> > Create</span>
+        <a class='breadcrumb-link' href="{{ url_for('show_main_page') }}">Home</a> > Create</span>
     </div>
+
     <div class='section section-title'>
       <h3>Create New Post</h3>
     </div>
+
     <div class='car-form'>
-      <form action="{{ url_for('createCar') }}" method='post' enctype='multipart/form-data'>
+      <form action="{{ url_for('create_car') }}" method='post' enctype='multipart/form-data'>
         <label for='category'>Please select a category:</label>
         <input type='text' id='category' name='category' list='l1' required pattern='Coupe|Hatchback|Pickup|Sedan|SUV|Van|Wagon'>
         <datalist id='l1'>
@@ -73,24 +72,30 @@
         </br>
         <div class='btn-toolbar'>
           <input type='submit' class='btn btn-success btn-lg' value='Create'>
-          <a class='btn btn-warning btn-lg' href="{{ url_for('showMainPage') }}" role='button'>Cancel</a>
+          <a class='btn btn-warning btn-lg' href="{{ url_for('show_main_page') }}" role='button'>Cancel</a>
         </div class='btn-toolbar'>
     </div>
     </form>
-  </div>
 
-  <div class='section footer'>
-    <p>This page was created by Eric Hanley as part of the Udacity Full Stack Nanodegree program.</p>
-    <div class="social-media-links">
-      <a class="social-media-link" href="https://github.com/ewhanley">
-        <img src="{{ url_for('static', filename='GitHub-Mark-32px.png') }}" alt="GitHub profile" width="21" height="21" />
-      </a>
-      <a class="social-media-link" href="https://www.linkedin.com/in/ericwhanley/">
-        <img src="{{ url_for('static', filename='In-Black-21px-TM.png') }}" alt="Linkedin profile" width="32" height="21" />
-      </a>
+    <div class='section footer'>
+      <p>This page was created by Eric Hanley as part of the Udacity Full Stack Nanodegree program.</p>
+      <div class="social-media-links">
+        <a class="social-media-link" href="https://github.com/ewhanley">
+          <img src="{{ url_for('static', filename='GitHub-Mark-32px.png') }}" alt="GitHub profile" width="21" height="21" />
+        </a>
+        <a class="social-media-link" href="https://www.linkedin.com/in/ericwhanley/">
+          <img src="{{ url_for('static', filename='In-Black-21px-TM.png') }}" alt="Linkedin profile" width="32" height="21" />
+        </a>
+      </div>
     </div>
   </div>
-  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
+    crossorigin="anonymous "></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js " integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh "
+    crossorigin="anonymous "></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js " integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ "
+    crossorigin="anonymous "></script>
 
 </body>
 

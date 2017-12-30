@@ -5,14 +5,10 @@
   <meta charset='UTF-8' />
   <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
   <title>Cars For Sale</title>
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
   <link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Roboto">
   <link rel='stylesheet' href="{{ url_for('static', filename='css/styles.css') }}">
-
-
-
 </head>
 
 <body>
@@ -23,23 +19,26 @@
       </div>
       <div class='login-button-container'>
         <a href="{{ url_for('disconnect') }}" class="btn btn-primary btn-sm" role="button">Logout</a>
-        <a href="{{ url_for('myPosts') }}">My Posts</a>
+        <a href="{{ url_for('my_posts') }}">My Posts</a>
       </div>
     </div>
+
     <div class='section breadcrumb-banner'>
       <span>
-        <a class='breadcrumb-link' href="{{ url_for('showMainPage') }}">Home</a> >
-        <a class='breadcrumb-link' href="{{ url_for('readCategory',category=editCar.category) }}">{{ editCar.category }}</a> >
-        <a class='breadcrumb-link' href="{{ url_for('readCar', category=editCar.category, car_id=editCar.id) }}">{{ editCar.year }} {{ editCar.make }} {{ editCar.model }}</a> > Update</span>
+        <a class='breadcrumb-link' href="{{ url_for('show_main_page') }}">Home</a> >
+        <a class='breadcrumb-link' href="{{ url_for('read_category',category=edit_car.category) }}">{{ edit_car.category }}</a> >
+        <a class='breadcrumb-link' href="{{ url_for('read_car', category=edit_car.category, car_id=edit_car.id) }}">{{ edit_car.year }} {{ edit_car.make }} {{ edit_car.model }}</a> > Update</span>
     </div>
+
     <div class='section section-title'>
-      <h3>Edit {{ editCar.year }} {{ editCar.make }} {{ editCar.model }}</h3>
+      <h3>Edit {{ edit_car.year }} {{ edit_car.make }} {{ edit_car.model }}</h3>
     </div>
+
     <div class='car-form'>
-      <form action="{{ url_for('updateCar', category=editCar.category, car_id=editCar.id) }}" method='post' enctype='multipart/form-data'>
+      <form action="{{ url_for('update_car', category=edit_car.category, car_id=edit_car.id) }}" method='post' enctype='multipart/form-data'>
         <label for='category'>Please select a category:</label>
         <input type='text' id='category' name='category' list='l1' required pattern='Coupe|Hatchback|Pickup|Sedan|SUV|Van|Wagon'
-          value="{{ editCar.category }}">
+          value="{{ edit_car.category }}">
         <datalist id='l1'>
           <option>Coupe</option>
           <option>Hatchback</option>
@@ -52,22 +51,22 @@
         </br>
         </br>
         <label for='year'>Year:</label>
-        <input type='number' min='1900' max='2050' id='year' name='year' required pattern='[0-9]{4}' value="{{ editCar.year }}">
+        <input type='number' min='1900' max='2050' id='year' name='year' required pattern='[0-9]{4}' value="{{ edit_car.year }}">
         <label for='make'>Make:</label>
-        <input type='text' maxLength='20' name='make' required value="{{ editCar.make }}">
+        <input type='text' maxLength='20' name='make' required value="{{ edit_car.make }}">
         <label for='model'>Model:</label>
-        <input type='text' maxLength='30' name='model' required value="{{ editCar.model }}">
+        <input type='text' maxLength='30' name='model' required value="{{ edit_car.model }}">
         </br>
         </br>
         <label for='mileage'>Mileage:</label>
-        <input type='number' min='0' max='1000000' id='mileage' name='mileage' value="{{ editCar.mileage }}">
+        <input type='number' min='0' max='1000000' id='mileage' name='mileage' value="{{ edit_car.mileage }}">
         <label for='price'>Price:</label>
-        <input type='number' min='0' max='1000000000' id='price' name='price' placeholder='USD' value="{{ editCar.price }}">
+        <input type='number' min='0' max='1000000000' id='price' name='price' placeholder='USD' value="{{ edit_car.price }}">
         </br>
         </br>
         <label for='description'>Description:</label>
         </br>
-        <textarea id='description' name='description' maxlength='1000' columns='300' rows='10'>{{ editCar.description }}</textarea>
+        <textarea id='description' name='description' maxlength='1000' columns='300' rows='10'>{{ edit_car.description }}</textarea>
         </br>
         </br>
         <span class='button'>Upload Image:
@@ -75,7 +74,7 @@
         </span>
         <div class='btn-toolbar'>
           <input type='submit' class='btn btn-success btn-lg' value='Update'>
-          <a class='btn btn-default btn-lg' href="{{ url_for('readCar', category=editCar.category, car_id=editCar.id) }}" role='button'>Cancel</a>
+          <a class='btn btn-default btn-lg' href="{{ url_for('read_car', category=edit_car.category, car_id=edit_car.id) }}" role='button'>Cancel</a>
         </div class='btn-toolbar'>
       </form>
     </div>
@@ -92,6 +91,13 @@
       </div>
     </div>
   </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
+    crossorigin="anonymous "></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js " integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh "
+    crossorigin="anonymous "></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js " integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ "
+    crossorigin="anonymous "></script>
 
 </body>
 

@@ -5,14 +5,10 @@
   <meta charset='UTF-8' />
   <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
   <title>Cars For Sale</title>
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
   <link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Roboto">
   <link rel='stylesheet' href="{{ url_for('static', filename='css/styles.css') }}">
-
-
-
 </head>
 
 <body>
@@ -23,9 +19,10 @@
       </div>
       <div class='login-button-container'>
         <a href="{{ url_for('disconnect') }}" class="btn btn-primary btn-sm" role="button">Logout</a>
-        <a href="{{ url_for('myPosts') }}">My Posts</a>
+        <a href="{{ url_for('my_posts') }}">My Posts</a>
       </div>
     </div>
+
     {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %}
     <div class="alert alert-{{ category }} alert-dismissible fade in show" role="alert">
       <strong>Holy guacamole!</strong> {{ message }}
@@ -38,45 +35,50 @@
     <div class='section banner'>
       <img src="{{ url_for( 'static', filename='automobiles-1869873_1920.jpg' ) }} ">
     </div>
+
     <div class='section category-container'>
       <div class='section category'>
-        <a class='category-link' href="{{ url_for( 'readCategory', category='Coupe' ) }} ">Coupe</a>
+        <a class='category-link' href="{{ url_for( 'read_category', category='Coupe' ) }} ">Coupe</a>
       </div>
       <div class='section category'>
-        <a class='category-link' href="{{ url_for( 'readCategory', category='Hatchback' ) }} ">Hatchback</a>
+        <a class='category-link' href="{{ url_for( 'read_category', category='Hatchback' ) }} ">Hatchback</a>
       </div>
       <div class='section category'>
-        <a class='category-link' href="{{ url_for( 'readCategory', category='Van' ) }} ">Van</a>
+        <a class='category-link' href="{{ url_for( 'read_category', category='Van' ) }} ">Van</a>
       </div>
       <div class='section category'>
-        <a class='category-link' href="{{ url_for( 'readCategory', category='Pickup' ) }} ">Pickup</a>
+        <a class='category-link' href="{{ url_for( 'read_category', category='Pickup' ) }} ">Pickup</a>
       </div>
       <div class='section category'>
-        <a class='category-link' href="{{ url_for( 'readCategory', category='Sedan' ) }} ">Sedan</a>
+        <a class='category-link' href="{{ url_for( 'read_category', category='Sedan' ) }} ">Sedan</a>
       </div>
       <div class='section category'>
-        <a class='category-link' href="{{ url_for( 'readCategory', category='SUV' ) }} ">SUV</a>
+        <a class='category-link' href="{{ url_for( 'read_category', category='SUV' ) }} ">SUV</a>
       </div>
       <div class='section category'>
-        <a class='category-link' href="{{ url_for( 'readCategory', category='Wagon' ) }} ">Wagon</a>
+        <a class='category-link' href="{{ url_for( 'read_category', category='Wagon' ) }} ">Wagon</a>
       </div>
       <div class='section category create-posting'>
-        <a class='category-link' href="{{ url_for( 'createCar') }} ">Create New Posting</a>
+        <a class='category-link' href="{{ url_for( 'create_car') }} ">Create New Posting</a>
       </div>
     </div>
+
     <div class='section card-container'>
       {% for car in newest %}
       <div class='section car-card'>
         <div class='car-card-img-holder'>
-          <img src="{{ url_for( 'static', filename='uploads/' + car.image) }} ">
+          <a href="{{ url_for('read_car', category=car.category, car_id=car.id) }}">
+            <img src="{{ url_for('static', filename='uploads/' + car.image) }}">
+          </a>
         </div>
-        <a href="{{ url_for( 'readCar', category=car.category, car_id=car.id) }} ">
+        <a href="{{ url_for( 'read_car', category=car.category, car_id=car.id) }} ">
           <span>{{ car.year }} {{ car.make }} {{car.model }}</span>
         </a>
         <span>{{ format_currency(car.price) }}</span>
       </div>
       {% endfor %}
     </div>
+
     <div class='section footer'>
       <p>This page was created by Eric Hanley as part of the Udacity Full Stack Nanodegree program.</p>
       <div class="social-media-links">
@@ -89,6 +91,7 @@
       </div>
     </div>
   </div>
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
     crossorigin="anonymous "></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js " integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh "

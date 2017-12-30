@@ -5,7 +5,6 @@
   <meta charset='UTF-8' />
   <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
   <title>Cars For Sale</title>
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
   <link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Roboto">
@@ -18,75 +17,24 @@
 </head>
 
 <body>
-
-  <script>
-    window.fbAsyncInit = function () {
-      FB.init({
-        appId: '983117238506250',
-        cookie: true,
-        xfbml: true,
-        version: 'v2.11'
-      });
-
-      FB.AppEvents.logPageView();
-
-    };
-
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) { return; }
-      js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
-
-    // Here we run a very simple test of the Graph API after login is
-    // successful.  See statusChangeCallback() for when this call is made.
-    function sendTokenToServer() {
-      var access_token = FB.getAuthResponse()['accessToken'];
-      console.log(access_token)
-      console.log('Welcome!  Fetching your information.... ');
-      FB.api('/me', function (response) {
-        console.log('Successful login for: ' + response.name);
-        $.ajax({
-          type: 'POST',
-          url: '/fbconnect?state={{STATE}}',
-          processData: false,
-          data: access_token,
-          contentType: 'application/octet-stream; charset=utf-8',
-          success: function (result) {
-            // Handle or verify the server response if necessary.
-            if (result) {
-              $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...')
-              setTimeout(function () {
-                window.location.href = "/cars";
-              }, 4000);
-
-            } else {
-              $('#result').html('Failed to make a server-side call. Check your configuration and console.');
-            }
-          }
-
-        });
-      });
-    }
-  </script>
   <div class='page'>
     <div class='section menu'>
       <div class='title-login'>
         <h1>Car Catalog App</h1>
       </div>
     </div>
+
     <div class='section breadcrumb-banner'>
       <span>
-        <a class='breadcrumb-link' href="{{ url_for('showMainPage') }}">Home</a> > Login</span>
+        <a class='breadcrumb-link' href="{{ url_for('show_main_page') }}">Home</a> > Login</span>
     </div>
+
     <div class='section section-title'>
       <h3>Login</h3>
     </div>
+
     <div class='login-expl'>After logging in you will be able to create and manage posts. Please log in with one of the following services:</div>
-    <!-- GOOGLE PLUS SIGN IN BUTTON -->
+
     <div class="signinButtons">
       <div>
         <span class="g-signin" data-scope="openid email" data-clientid="938662108513-cjs8p4qq3rq4c167l35ni59v7nc3isf5.apps.googleusercontent.com"
@@ -128,7 +76,55 @@
         }
       }
     </script>
-    <!-- END GOOGLE PLUS SIGN IN BUTTON -->
+    <script>
+
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: '983117238506250',
+          cookie: true,
+          xfbml: true,
+          version: 'v2.11'
+        });
+        FB.AppEvents.logPageView();
+      };
+
+      (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+
+      // Here we run a very simple test of the Graph API after login is
+      // successful.  See statusChangeCallback() for when this call is made.
+      function sendTokenToServer() {
+        var access_token = FB.getAuthResponse()['accessToken'];
+        console.log(access_token)
+        console.log('Welcome!  Fetching your information.... ');
+        FB.api('/me', function (response) {
+          console.log('Successful login for: ' + response.name);
+          $.ajax({
+            type: 'POST',
+            url: '/fbconnect?state={{STATE}}',
+            processData: false,
+            data: access_token,
+            contentType: 'application/octet-stream; charset=utf-8',
+            success: function (result) {
+              // Handle or verify the server response if necessary.
+              if (result) {
+                window.location.href = "/cars";
+              } else if (authResult['error']) {
+                console.log('There was an error: ' + authResult['error']);
+              } else {
+                $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+              }
+            }
+          });
+        });
+      }
+    </script>
+
     <div class='section footer'>
       <p>This page was created by Eric Hanley as part of the Udacity Full Stack Nanodegree program.</p>
       <div class="social-media-links">
@@ -141,6 +137,7 @@
       </div>
     </div>
   </div>
+
 </body>
 
 </html>

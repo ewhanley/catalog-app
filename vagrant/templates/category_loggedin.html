@@ -5,7 +5,6 @@
   <meta charset='UTF-8' />
   <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
   <title>Cars For Sale</title>
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
   <link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Roboto">
@@ -20,29 +19,35 @@
       </div>
       <div class='login-button-container'>
         <a href="{{ url_for('disconnect') }}" class="btn btn-primary btn-sm" role="button">Logout</a>
-        <a href="{{ url_for('myPosts') }}">My Posts</a>
+        <a href="{{ url_for('my_posts') }}">My Posts</a>
       </div>
     </div>
+
     <div class='section breadcrumb-banner'>
       <span>
-        <a class='breadcrumb-link' href="{{ url_for('showMainPage') }}">Home</a> > {{ category }}</span>
+        <a class='breadcrumb-link' href="{{ url_for('show_main_page') }}">Home</a> > {{ category }}</span>
     </div>
+
     <div class='section section-title'>
       <h3>{{ category }}</h3>
     </div>
+
     <div class='section card-container'>
       {% for car in cars %}
       <div class='section car-card'>
         <div class='car-card-img-holder'>
-          <img src="{{ url_for('static', filename='uploads/' + car.image) }}">
+          <a href="{{ url_for('read_car', category=car.category, car_id=car.id) }}">
+            <img src="{{ url_for('static', filename='uploads/' + car.image) }}">
+          </a>
         </div>
-        <a href="{{ url_for('readCar', category=car.category, car_id=car.id) }}">
+        <a href="{{ url_for('read_car', category=car.category, car_id=car.id) }}">
           <span>{{ car.year }} {{ car.make }} {{car.model }}</span>
         </a>
         <span>{{ format_currency(car.price) }}</span>
       </div>
       {% endfor %}
     </div>
+
     <div class='section footer'>
       <p>This page was created by Eric Hanley as part of the Udacity Full Stack Nanodegree program.</p>
       <div class="social-media-links">
@@ -54,13 +59,16 @@
         </a>
       </div>
     </div>
+
   </div>
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
     crossorigin="anonymous "></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js " integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh "
     crossorigin="anonymous "></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js " integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ "
     crossorigin="anonymous "></script>
+
 </body>
 
 </html>

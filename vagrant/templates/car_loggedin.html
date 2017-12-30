@@ -5,14 +5,10 @@
   <meta charset='UTF-8' />
   <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
   <title>Cars For Sale</title>
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
     crossorigin="anonymous">
   <link rel='stylesheet' href="https://fonts.googleapis.com/css?family=Roboto">
   <link rel='stylesheet' href="{{ url_for('static', filename='css/styles.css') }}">
-
-
-
 </head>
 
 <body>
@@ -23,9 +19,10 @@
       </div>
       <div class='login-button-container'>
         <a href="{{ url_for('disconnect') }}" class="btn btn-primary btn-sm" role="button">Logout</a>
-        <a href="{{ url_for('myPosts') }}">My Posts</a>
+        <a href="{{ url_for('my_posts') }}">My Posts</a>
       </div>
     </div>
+
     {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %}
     <div class="alert alert-{{ category }} alert-dismissible fade in show" role="alert">
       <strong>Holy guacamole!</strong> {{ message }}
@@ -34,14 +31,17 @@
       </button>
     </div>
     {% endfor %} {% endif %} {% endwith %}
+
     <div class='section breadcrumb-banner'>
       <span>
-        <a class='breadcrumb-link' href="{{ url_for('showMainPage') }}">Home</a> >
-        <a class='breadcrumb-link' href="{{ url_for('readCategory',category=car.category) }}">{{ car.category }}</a> > {{ car.year }} {{ car.make }} {{ car.model }}</span>
+        <a class='breadcrumb-link' href="{{ url_for('show_main_page') }}">Home</a> >
+        <a class='breadcrumb-link' href="{{ url_for('read_category',category=car.category) }}">{{ car.category }}</a> > {{ car.year }} {{ car.make }} {{ car.model }}</span>
     </div>
+
     <div class='section section-title'>
       <h3>{{ car.year }} {{ car.make }} {{ car.model }}</h3>
     </div>
+
     <div class='section car-container'>
       <div class='ad-img-container'>
         {% if car.image is none %}
@@ -61,12 +61,13 @@
       {% if user_id == car.user_id %}
       <div class='update-delete-links'>
         <span>
-          <a href="{{ url_for('updateCar', category=car.category, car_id=car.id) }}">Update Post</a> |
-          <a href="{{ url_for('deleteCar', category=car.category, car_id=car.id) }}">Delete Post</a>
+          <a href="{{ url_for('update_car', category=car.category, car_id=car.id) }}">Update Post</a> |
+          <a href="{{ url_for('delete_car', category=car.category, car_id=car.id) }}">Delete Post</a>
         </span>
       </div>
       {% endif %}
     </div>
+
     <div class='section footer'>
       <p>This page was created by Eric Hanley as part of the Udacity Full Stack Nanodegree program.</p>
       <div class="social-media-links">
@@ -79,6 +80,7 @@
       </div>
     </div>
   </div>
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
     crossorigin="anonymous "></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js " integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh "
