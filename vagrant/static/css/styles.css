@@ -255,12 +255,13 @@ body, h1, p, .btn {
     flex-direction: column;
     align-self: flex-start;
     padding: 10px 20px 10px 20px;
+    min-width: 180px;
 }
 
 .car-description {
     width: 100%;
     font-size: 1.3em;
-    padding: 10px 20px 10px 20px;
+    padding: 10px;
 }
 
 .update-delete-links {
