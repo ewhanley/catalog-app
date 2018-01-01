@@ -30,16 +30,16 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-# Formats price numbers in USD with commas
-
 
 def format_currency(value):
+    '''Formats a number with thousands separator and currency ($)
+    prefix.
+    '''
     return "${:,}".format(value)
-
-# Formats mileage numbers with commas
 
 
 def format_number(value):
+    '''Formats numbers with thousands separator.'''
     return "{:,}".format(value)
 
 
@@ -47,17 +47,21 @@ app.jinja_env.globals.update(format_currency=format_currency)
 app.jinja_env.globals.update(format_number=format_number)
 
 
-# Create anti-forgery state token
 @app.route('/login')
 def show_login():
+    '''Generates a random uppercase alphanumeric string, 32 characters
+    in length to prevent cross-site request forgery.
+    '''
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in xrange(32))
     login_session['state'] = state
     return render_template('login.html', STATE=state)
 
 
-# Login helper functions
 def create_user(login_session):
+    '''Creates a new User object upon login and commits it to the User table.
+    Returns the respective user id.
+    '''
     newUser = User(name=login_session['username'],
                    email=login_session['email'])
     session.add(newUser)
@@ -67,11 +71,17 @@ def create_user(login_session):
 
 
 def get_user_info(user_id):
+    '''Returns the resulting user object from a query filtered on user
+    id
+    '''
     user = session.query(User).filter_by(id=user.id).one()
     return user
 
 
 def get_user_id(email):
+    '''Queries user id associated with a given email address. Returns
+    None if user does not exist.
+    '''
     try:
         user = session.query(User).filter_by(email=email).one()
         return user.id
@@ -113,7 +123,7 @@ def gconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
-    # Verify that the access token is used for the inteded user
+    # Verify that the access token is used for the inteded user.
     gplus_id = credentials.id_token['sub']
     if result['user_id'] != gplus_id:
         response = make_response(
@@ -121,7 +131,7 @@ def gconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
-    # Verify that the access token is valid for this app
+    # Verify that the access token is valid for this app.
     if result['issued_to'] != CLIENT_ID:
         response = make_response(
             json.dumps("Token's client ID does not match app's."), 401)
@@ -131,17 +141,18 @@ def gconnect():
     stored_access_token = login_session.get('access_token')
     stored_gplus_id = login_session.get('gplus_id')
 
+    # Check if user already logged in.
     if stored_access_token is not None and gplus_id == stored_gplus_id:
         response = make_response(
             json.dumps('Current user is already connected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
-    # Store the access token in the session for later use
+    # Store the access token in the session for later use.
     login_session['access_token'] = credentials.access_token
     login_session['gplus_id'] = gplus_id
 
-    # Get user info
+    # Get user info.
     userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo"
     params = {'access_token': credentials.access_token, 'alt': 'json'}
     answer = requests.get(userinfo_url, params=params)
@@ -205,12 +216,12 @@ def fbconnect():
 
     # Use token to get user info from API
     userinfo_url = "https://graph.facebook.com/v2.8/me"
-    # Due to the formatting for the result from the server token exchange we
-    # have to split the token first on commas and select the first index
-    # which gives us the key : value for the server access token. Then we
-    # split it on colons to pull out the actual token value and replace the
-    # remaining quotes with nothing so that it can be used directly in the
-    # graph api calls.
+    # Due to the formatting for the result from the server token
+    # exchange we have to split the token first on commas and select the
+    # first index which gives us the key : value for the server access
+    # token. Then we split it on colons to pull out the actual token
+    # value and replace the remaining quotes with nothing so that it can
+    # be used directly in the graph api calls.
     token = result.split(',')[0].split(':')[1].replace('"', '')
 
     url = ('https://graph.facebook.com/v2.8/me?access_token=%s&fields=name,id,'
@@ -223,10 +234,9 @@ def fbconnect():
     login_session['email'] = data["email"]
     login_session['facebook_id'] = data["id"]
 
-    # The token must be stored in the login_session in order to properly logout
+    # The token must be stored in the login_session to properly logout
     login_session['access_token'] = token
 
-    # see if user exists
     user_id = get_user_id(login_session['email'])
     if not user_id:
         user_id = create_user(login_session)
@@ -236,7 +246,6 @@ def fbconnect():
     output += '<h1>Welcome, '
     output += login_session['username']
     output += '!</h1>'
-    output += '<img src="'
 
     flash("Now logged in as %s" % login_session['username'], 'success')
     return output
