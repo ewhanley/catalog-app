@@ -345,8 +345,8 @@ def create_car():
         return redirect(url_for('show_login'))
     else:
         if request.method == 'POST':
-            file = request.files['image']
-            if len(file.filename) > 0:
+            if len(request.files) > 0:
+                file = request.files['image']
                 hashed_filename = hashlib.md5(
                     str(uuid.uuid4()) + file.filename).hexdigest()
                 f = os.path.join(app.config['UPLOAD_FOLDER'], hashed_filename)
@@ -395,7 +395,7 @@ def update_car(category, car_id):
                                     car_id=edit_car.id))
         if request.method == 'POST':
 
-            if request.files['image'].filename != '' > 0:
+            if len(request.files) > 0:
                 file = request.files['image']
                 hashed_filename = hashlib.md5(
                     str(uuid.uuid4()) + file.filename).hexdigest()
