@@ -1,6 +1,6 @@
 # Project 4: Item Catalog
 
-This project is a Flask-based CRUD web application that provides a catalog of used cars for sale by type (SUV, Coupe, etc). It provides an OAuth2-based user registration system whereby users can log in with either Google or Facebook. Once registered, users have the ability to create, edit, and delete their own posts.
+This project is a Flask-based CRUD web application that provides a catalog of used cars for sale by type (SUV, Coupe, etc). The project incorporates responsive design to ensure consistent UX from any viewport. It includes an OAuth2-based user registration system whereby users can log in with either Google or Facebook. Once registered, users have the ability to create, edit, and delete their own posts.
 
 ![Screenshot of Item Catalog main page](screenshots/main.png)
 
@@ -101,7 +101,8 @@ This step will take several minutes the first time you run it as it will install
     vagrant@vagrant:/vagrant$ python project.py
     ```
 
-**Note:** The VM is configured such that all Python dependencies are pre-installed. Additionally, the database pre-populated the first time the VM is provisioned. If you ever want to refresh the database to its initial state, you can run `remove_db.sh`. Then you can type `exit` or `Ctrl-d` to get back to your machine's prompt where you can run:
+**Notes:**
+The VM is configured such that all Python dependencies are pre-installed. Additionally, the database pre-populated the first time the VM is provisioned. If you ever want to refresh the database to its initial state, you can run `remove_db.sh`. Then you can type `exit` or `Ctrl-d` to get back to your machine's prompt where you can run:
 
 ```bash
 
@@ -109,3 +110,5 @@ This step will take several minutes the first time you run it as it will install
 ```
 
 This will reload the VM from the config in Vagrantfile, which will recreate the database.
+
+All images were sourced from [Pixabay](https://pixabay.com/) and are used under the Creative Commons CC0 license.
