@@ -48,7 +48,17 @@ These instructions will explain how to get a copy of this project running on you
    - Select *Settings* from the left panel, scroll to the bottom, and enter *http://localhost:5000/* for the *Site URL*.
    - Now, in the left panel, choose *+ Add Product* and add *Facebook Login*
    - Under Facebook Login settings, add *http://localhost:5000/* to *Valid OAuth redirect URIs*
-   - Finally, paste your App ID and App Secret into a json file and save it in the project root directory as `fb_client_secrets.json`.  
+   - Finally, paste your App ID and App Secret into a json file and save it in the project root (`/vagrant`) directory as `fb_client_secrets.json`. The file should have the following format:
+        ```json
+
+        {
+            "web": {
+                "app_id": "PASTE_YOUR_APP_ID_HERE",
+                "app_secret": "PASTE_YOUR_APP_SECRET_HERE"
+            }
+        }
+        ```
+
 5. Copy
 4. Download the data to populate the project database [here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip). **You will have to extract the file and put the `newsdata.sql` file into the `/vagrant` directory from Step 3.**
 
