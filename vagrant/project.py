@@ -35,18 +35,18 @@ def format_currency(value):
     '''Formats a number with thousands separator and currency ($)
     prefix.
     '''
-    if len(value) > 0:
+    if value:
         return "${:,}".format(value)
     else:
-        return value
+        return '-'
 
 
 def format_number(value):
     '''Formats numbers with thousands separator.'''
-    if len(value) > 0:
+    if value:
         return "{:,}".format(value)
     else:
-        return value
+        return '-'
 
 
 app.jinja_env.globals.update(format_currency=format_currency)
@@ -372,6 +372,8 @@ def create_car():
                 dt_created=calendar.timegm(time.gmtime()))
             session.add(newCar)
             session.commit()
+            print newCar.mileage
+            print newCar.price
 
             car = session.query(Car).filter_by(
                 user_id=login_session['user_id']).order_by(Car.dt_created.desc(
