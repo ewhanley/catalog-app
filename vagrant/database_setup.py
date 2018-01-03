@@ -43,7 +43,6 @@ class Car(Base):
             'price': self.price,
             'description': self.description,
             'id': self.id,
-            'user_id': self.user_id,
             'image': self.image,
             'date_created': self.dt_created,
             'date_modified': self.dt_modified

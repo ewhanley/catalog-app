@@ -291,6 +291,8 @@ def disconnect():
         flash("You were not logged in", 'warning')
         return redirect(url_for('show_main_page'))
 
+# Returns data for all calls in a given category in JSON format
+
 
 @app.route('/cars/<string:category>/JSON')
 def category_json(category):
@@ -298,6 +300,7 @@ def category_json(category):
     return jsonify(Cars=[i.serialize for i in cars])
 
 
+# Returns data for a specific car in JSON format
 @app.route('/cars/<string:category>/<int:car_id>/JSON')
 def car_json(category, car_id):
     car = session.query(Car).filter_by(category=category, id=car_id).one()
