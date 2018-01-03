@@ -66,11 +66,10 @@ These instructions will explain how to get a copy of this project running on you
    - Once the credentials are created, download the corresponding JSON file and save it as `g_client_secrets.json` in the project root directory (`\vagrant`).
    - Lastly replace the client ID on line 40 of `templates\login.html` with your client ID:
 
-    ```html
+        ```html
 
-    <span class="g-signin" data-scope="openid email" data-clientid="YOUR_GOOGLE_CLIENT_ID_HERE"
-    
-    ```
+        <span class="g-signin" data-scope="openid email" data-clientid="YOUR_GOOGLE_CLIENT_ID_HERE"
+        ```
 
 5. Copy
 4. Download the data to populate the project database [here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip). **You will have to extract the file and put the `newsdata.sql` file into the `/vagrant` directory from Step 3.**
