@@ -110,3 +110,4 @@ This step will take several minutes the first time you run it as it will install
     ```
 
 - All images were sourced from [Pixabay](https://pixabay.com/) and are used under the Creative Commons CC0 license.
+- All OAuth2 work is based on the OAuth module presented in the *The Backend: Databases & Applications* module of the Full Stack Nanodegree
