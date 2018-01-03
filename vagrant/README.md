@@ -2,7 +2,7 @@
 
 This project is a Flask-based CRUD web application that provides a catalog of used cars for sale by type (SUV, Coupe, etc). It provides an OAuth2-based user registration system whereby users can log in with either Google or Facebook. Once registered, users have the ability to create, edit, and delete their own posts.
 
-![Screenshot of Item Catalog main page](/screenshots/main.png)
+![Screenshot of Item Catalog main page](screenshots/main.png)
 
 ## Motivation
 
