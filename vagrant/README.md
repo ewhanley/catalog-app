@@ -42,7 +42,7 @@ These instructions will explain how to get a copy of this project running on you
     > cd udacity-full-stack/backend-project/vagrant
     ```
 
-4. Get a Facebook App ID by creating a new web-app
+4. Get a Facebook App ID by creating a new web-app:
    - Go [here](https://developers.facebook.com/quickstarts/?platform=web) to register a new web app. Start by naming the app whatever you'd like. I called mine *Udacity Backend Project*.
    - Choose *Skip Quick Start* in the upper right.
    - Select *Settings* from the left panel, scroll to the bottom, and enter *http://localhost:5000/* for the *Site URL*.
@@ -58,6 +58,19 @@ These instructions will explain how to get a copy of this project running on you
             }
         }
         ```
+
+5. Get a Google OAuth 2.0 client ID and client secret
+   - Go [here](https://console.developers.google.com/apis/dashboard) and create a new project via the dropdown in the upper left of the page.
+   - Once the project is completed, select *OAuth client ID* from the *Create credentials* dropdown in the middle of the page.
+   - Follow the prompts, selecting *Web application* as the Application type. Also, add *http://localhost:5000/* as an Authorized Javascript origin and add *http://localhost:5000* and *http://localhost:5000/login* and *http://localhost:5000/gconnect* to the list of Authorized redirect URIs.
+   - Once the credentials are created, download the corresponding JSON file and save it as `g_client_secrets.json` in the project root directory (`\vagrant`).
+   - Lastly replace the client ID on line 40 of `templates\login.html` with your client ID:
+
+    ```html
+
+    <span class="g-signin" data-scope="openid email" data-clientid="YOUR_GOOGLE_CLIENT_ID_HERE"
+    
+    ```
 
 5. Copy
 4. Download the data to populate the project database [here](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip). **You will have to extract the file and put the `newsdata.sql` file into the `/vagrant` directory from Step 3.**
