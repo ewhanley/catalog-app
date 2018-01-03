@@ -48,10 +48,10 @@ These instructions will explain how to get a copy of this project running on you
 
 4. Get a Facebook App ID by creating a new web-app:
    - Go [here](https://developers.facebook.com/quickstarts/?platform=web) to register a new web app. Start by naming the app whatever you'd like. I called mine *Udacity Backend Project*.
-   - Choose *Skip Quick Start* in the upper right.
-   - Select *Settings* from the left panel, scroll to the bottom, and enter *http://localhost:5000/* for the *Site URL*.
-   - Now, in the left panel, choose *+ Add Product* and add *Facebook Login*
-   - Under Facebook Login settings, add *http://localhost:5000/* to *Valid OAuth redirect URIs*
+   - Choose **Skip Quick Start** in the upper right.
+   - Select **Settings** from the left panel, scroll to the bottom, and enter http://localhost:5000/ for the **Site URL**.
+   - Now, in the left panel, choose **+ Add Product** and add **Facebook Login**
+   - Under Facebook Login settings, add http://localhost:5000/ to **Valid OAuth redirect URIs**
    - Finally, paste your App ID and App Secret into a json file and save it in the project root (`/vagrant`) directory as `fb_client_secrets.json`. The file should have the following format:
         ```json
 
@@ -65,8 +65,8 @@ These instructions will explain how to get a copy of this project running on you
 
 5. Get a Google OAuth 2.0 client ID and client secret
    - Go [here](https://console.developers.google.com/apis/dashboard) and create a new project via the dropdown in the upper left of the page.
-   - Once the project is completed, select *OAuth client ID* from the *Create credentials* dropdown in the middle of the page.
-   - Follow the prompts, selecting *Web application* as the Application type. Also, add *http://localhost:5000/* as an Authorized Javascript origin and add *http://localhost:5000* and *http://localhost:5000/login* and *http://localhost:5000/gconnect* to the list of Authorized redirect URIs.
+   - Once the project is completed, select **OAuth client ID** from the **Create credentials** dropdown in the middle of the page.
+   - Follow the prompts, selecting **Web application** as the Application type. Also, add http://localhost:5000/ as an Authorized Javascript origin and add http://localhost:5000 and http://localhost:5000/login and http://localhost:5000/gconnect to the list of Authorized redirect URIs.
    - Once the credentials are created, download the corresponding JSON file and save it as `g_client_secrets.json` in the project root directory (`\vagrant`).
    - Lastly replace the client ID on line 40 of `templates\login.html` with your client ID:
 
