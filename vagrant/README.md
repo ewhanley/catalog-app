@@ -79,7 +79,7 @@ These instructions will explain how to get a copy of this project running on you
 
     > vagrant up
 
-This step will take several minutes the first time you run it as it will install all of the required library dependencies for Python as well as populate the database with some example users and cars. If you're interested in the details of this, check out `vagrant/Vagrantfile`, which is a slightly modified version of the config provided by Udacity as part of this project.
+This step will take several minutes the first time you run it as it will install all of the required library dependencies for Python as well as populate the database with some example users and cars. If you're interested in the details[<sup>1</sup>](#notes) of this, check out `vagrant/Vagrantfile`, which is a slightly modified version of the config provided by Udacity as part of this project.
 
 6. After the VM is up and running, log into it by typing:
 
