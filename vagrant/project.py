@@ -35,12 +35,18 @@ def format_currency(value):
     '''Formats a number with thousands separator and currency ($)
     prefix.
     '''
-    return "${:,}".format(value)
+    if len(value) > 0:
+        return "${:,}".format(value)
+    else:
+        return value
 
 
 def format_number(value):
     '''Formats numbers with thousands separator.'''
-    return "{:,}".format(value)
+    if len(value) > 0:
+        return "{:,}".format(value)
+    else:
+        return value
 
 
 app.jinja_env.globals.update(format_currency=format_currency)
