@@ -7,7 +7,6 @@ import calendar
 import time
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
 from database_setup import Car, Base, User
 
 engine = create_engine('sqlite:///usedcars.db')
@@ -51,7 +50,6 @@ description = '''Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
               sunt in culpa qui officia deserunt mollit anim id est laborum.'''
 
 
-
 images = ('coupe_bmw.jpg', 'coupe_camaro.jpg', 'coupe_jaguar.jpg',
           'coupe_mercedes.jpg', 'coupe_mustang.jpg', 'hb_fiat.jpg',
           'hb_subaru.jpg', 'hb_vw.jpg', 'pu_chevrolet.jpg',
@@ -63,12 +61,16 @@ images = ('coupe_bmw.jpg', 'coupe_camaro.jpg', 'coupe_jaguar.jpg',
 src_dir = 'example_images'
 dst_dir = 'static/uploads'
 
+print "Populating database with example records."
+print "Creating dummy users"
 # Create dummy users
 for user in users:
     new_user = User(name=user[0], email=user[1])
     session.add(new_user)
     session.commit()
+    print ('Added dummy user: %s!' % new_user.name)
 
+print "Creating dummy cars"
 # Create dummy cars
 for i in range(0, len(categories)):
     src_filename = images[i]
