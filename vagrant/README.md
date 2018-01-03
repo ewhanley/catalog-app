@@ -101,7 +101,7 @@ This step will take several minutes the first time you run it as it will install
     vagrant@vagrant:/vagrant$ python project.py
     ```
 
-[**Notes:**](#notes)
+[####Notes](#notes)
 1. The VM is configured such that all Python dependencies are pre-installed. Additionally, the database pre-populated the first time the VM is provisioned. If you ever want to refresh the database to its initial state, you can run `remove_db.sh`. Then you can type `exit` or `Ctrl-d` to get back to your machine's prompt where you can run the following, which will reload the VM and re-populate the database:
 
     ```bash
