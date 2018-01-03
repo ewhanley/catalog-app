@@ -291,9 +291,8 @@ def disconnect():
         flash("You were not logged in", 'warning')
         return redirect(url_for('show_main_page'))
 
-# Returns data for all calls in a given category in JSON format
 
-
+# Returns data for all cars in a given category in JSON format
 @app.route('/cars/<string:category>/JSON')
 def category_json(category):
     cars = session.query(Car).filter_by(category=category).all()
